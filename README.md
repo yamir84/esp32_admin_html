@@ -1,5 +1,6 @@
 ESP32 Admin Panel - HTML
-Proyecto de Panel administrativo embevido dentro del ESP32
+
+Proyecto de Panel administrativo embebido dentro del ESP32
 
 Comenzando 🚀
 Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas.
@@ -21,8 +22,7 @@ Comment-Snippets
 Atajos para crear bloques de comentario: comm-section ó comm-html-section
 
 JS-CSS-HTML Formatter
-Atajo para indentar código: 
-shortcuts: Alt+Shift+F
+Atajo para indentar código: shortcuts: Alt+Shift+F
 
 Bootstrap 4, Font awesome 4, Font Awesome 5 Free & Pro snippets
 Autocompletador de bloques de código de Bootstrap 4 & Font Awesome
@@ -38,8 +38,11 @@ Tema para Visual Studio Code
 
 Construido con 🛠️
 Visual Studio Code - HTML & JavaScript
+
 https://code.visualstudio.com/
+
 https://www.w3schools.com/html/
+
 https://www.javascript.com/
 
 Wiki 📖
@@ -50,8 +53,12 @@ https://www.youtube.com/watch?v=1gniMO-Py8o&list=PL8HAlytDEGGg5-KzLQfAJqAZzosHVa
 Versiones 📌
 
 v1.0.2
+<<<<<<< HEAD
 - Video 3 - Maquetado Dashboard Final
 - Video 2 - Maquetado Dashboard
+=======
+- Video Maquetado Dashboard
+>>>>>>> 4ca8d4a23bfa25cd63582fe9253ef6c99d5e9575
 
 v1.0.1
 - Video 1 - Introducción
@@ -66,7 +73,9 @@ Este proyecto está bajo la Licencia (MIT)
 
 Expresiones de Gratitud 🎁
 Comenta a otros sobre este proyecto 📢
+
 Invita una cerveza 🍺 o un café ☕ a alguien del equipo. -> https://www.paypal.com/donate/?hosted_button_id=L3FWEH5WS7UZG
-Da las gracias públicamente 🤓.
-etc.
+
+Gracias 🤓.
+
 ⌨️ con ❤️ por IoT Cuba Electronica 😊 para el Mundo
