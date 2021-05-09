@@ -63,7 +63,9 @@ Este proyecto está bajo la Licencia (MIT)
 
 Expresiones de Gratitud 🎁
 Comenta a otros sobre este proyecto 📢
+
 Invita una cerveza 🍺 o un café ☕ a alguien del equipo. -> https://www.paypal.com/donate/?hosted_button_id=L3FWEH5WS7UZG
-Da las gracias públicamente 🤓.
-etc.
+
+Gracias 🤓.
+
 ⌨️ con ❤️ por IoT Cuba Electronica 😊 para el Mundo
