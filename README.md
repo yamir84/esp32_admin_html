@@ -48,8 +48,10 @@ Lista de Reproducción
 https://www.youtube.com/watch?v=1gniMO-Py8o&list=PL8HAlytDEGGg5-KzLQfAJqAZzosHVaxti
 
 Versiones 📌
+
 v1.0.2
 - Video Maquetado Dashboard
+
 v1.0.1
 - Video Introducción
 
