@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="no-js">
+    
+    <head>
+          <meta charset="utf-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <title>ESP WebConfig | Portal</title>
+          <meta http-equiv="Content-Type" content="text/html; ISO-8859-1">
+          <META NAME="DC.Language" SCHEME="RFC1766" CONTENT="Spanish">
+          <META NAME="AUTHOR" CONTENT="CubaElectronica">
+          <META NAME="REPLY-TO" CONTENT="admin@cubaelectronica.com">
+          <LINK REV="made" href="mailto:admin@cubaelectronica.com">
+          <META NAME="DESCRIPTION"
+            CONTENT="WebConfig página embebida para la configuración de dispositivos de la familia ESP8266 y ESP32">
+          <META NAME="KEYWORDS"
+            CONTENT="ESP32,IOT,programación,MQTT,cursos,cubaelectronica,internet,de,las,cosas,Ardiono,Youtube">
+          <META NAME="Resource-type" CONTENT="HOWTO">
+          <META NAME="DateCreated" CONTENT="Wed, 1 April 2020 00:00:00 GMT-4">
+          <META NAME="Revisit-after" CONTENT="1 days">
+          <META NAME="robots" content="ALL">
+          <!-- Favicon icon icono que sale en la web-->
+          <link rel="icon" href="./assets/logo.png" type="image/x-icon">
+        <!-- Bootstrap -->
+        <link href="bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+        <link href="jquery.easy-pie-chart.css" rel="stylesheet" media="screen">
+        <link href="styles.css" rel="stylesheet" media="screen">
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <script src="modernizr.min.js"></script>
+    </head>
+    
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">ESP WebConfig</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right">
+                            <li class="dropdown">
+                                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user"></i> Admin <i class="caret"></i>
+
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a tabindex="-1" href="#">Perfil</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a tabindex="-1" href="#">Salir</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="#">Dashboard</a>
+                            </li>
+                         
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span3" id="sidebar">
+                    <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
+                        <li class="active">
+                            <a href="/"><i class="icon-th pull-left"></i><i class="icon-chevron-right"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="config"><i class="icon-signal pull-left"></i><i class="icon-chevron-right"></i> WiFi</a>
+                        </li>
+                        <li>
+                            <a href="config"><i class="icon-th-large pull-left"></i><i class="icon-chevron-right"></i> MQTT</a>
+                        </li>
+                        <li>
+                            <a href="reconfig"><i class="icon-arrow-down pull-left"></i><i class="icon-chevron-right"></i> Restaurar</a>
+                        </li>
+                        <li>
+                            <a href="reconfig"><i class="icon-repeat pull-left"></i><i class="icon-chevron-right"></i> Reiniciar</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!--/span-->
+                <div class="span9" id="content">
+                    <div class="row-fluid">
+                          	<div class="navbar">
+                            	<div class="navbar-inner">
+	                                <ul class="breadcrumb">
+	                                    <i class="icon-chevron-left hide-sidebar"><a href='#' title="Hide Sidebar" rel='tooltip'>&nbsp;</a></i>
+	                                    <i class="icon-chevron-right show-sidebar" style="display:none;"><a href='#' title="Show Sidebar" rel='tooltip'>&nbsp;</a></i>
+	                                    <li>
+	                                        <a href="#">Dashboard</a> <span class="divider">/</span>	
+	                                    </li>
+	                                    <li class="active">Panel</li>
+	                                </ul>
+                            	</div>
+                        	</div>
+                    	</div>
+                    <div class="row-fluid">
+                        <!-- block -->
+                        <div class="block">
+                            <div class="navbar navbar-inner block-header">
+                                <div class="muted pull-left">Statistics</div>
+                                <div class="pull-right"><span class="badge badge-warning">View More</span>
+
+                                </div>
+                            </div>
+                            <div class="block-content collapse in">
+                                <div class="span3">
+                                    <div class="chart" data-percent="50">50
+                                    %</div>
+                                    <div class="chart-bottom-heading"><span class="label label-info">Visitors</span>
+
+                                    </div>
+                                </div>
+                                <div class="span3">
+                                    <div class="chart" data-percent="53">53%</div>
+                                    <div class="chart-bottom-heading"><span class="label label-info">Page Views</span>
+
+                                    </div>
+                                </div>
+                                <div class="span3">
+                                    <div class="chart" data-percent="83">83%</div>
+                                    <div class="chart-bottom-heading"><span class="label label-info">Users</span>
+
+                                    </div>
+                                </div>
+                                <div class="span3">
+                                    <div class="chart" data-percent="13">13%</div>
+                                    <div class="chart-bottom-heading"><span class="label label-info">Orders</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /block -->
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <!-- block -->
+                            <div class="block">
+                                <div class="navbar navbar-inner block-header">
+                                    <div class="muted pull-left"><i class="icon-signal"></i> RED WIFI</div>
+                                </div>
+                                
+                                <div class="block-content collapse in">
+                                    
+                                    <div><span class="label label-info">Estado:</span>  <span class="label label-success">#WFEstatus#</span></div>
+                                    <div><span class="label label-info">Red:</span>  <span>#WFSSID#</span></div>
+                                    <div><span class="label label-info">IP:</span>  <span>#sysIP#</span></div>
+                                    <div><span class="label label-info">RSSI:</span>  <span>#WFDBM#</span></div>
+                                    <div><span class="label label-info">Señal:</span>  <span>#WFPRC#</span></div>
+                                </div>
+                            </div>
+                            <!-- /block -->
+                        </div>
+                        <div class="span6">
+                            <!-- block -->
+                            <div class="block">
+                                <div class="navbar navbar-inner block-header">
+                                    <div class="muted pull-left"><i class="icon-th-large"></i> MQTT BROKER</div>
+                                   
+                                </div>
+                                <div class="block-content collapse in">
+                                    <div><span class="label label-info">Estado:</span>  <span class="label label-success">#MQTTStatus#</span></div>
+                                    <div><span class="label label-info">Servidor:</span>  <span>#MQTTBroker#</span></div> 
+                                    <div><span class="label label-info">Usuario:</span>  <span>#MQTTUser#</span></div>
+                                    <div><span class="label label-info">Client ID:</span>  <span>#MQTTID#</span></div>
+                                    <br> 
+                                </div>
+                            </div>
+                            <!-- /block -->
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <!-- block -->
+                            <div class="block">
+                                <div class="navbar navbar-inner block-header">
+                                    <div class="muted pull-left"><i class="icon-info-sign"></i> INFORMACIÓN</div>
+                                </div>
+                                
+                                <div class="block-content collapse in">
+                                 <div><span class="label label-info">Identificación:</span>  <span>#id#</span></div>
+                                 <div><span class="label label-info">Nro. Serie:</span>  <span>#serial#</span></div>
+                                 <div><span class="label label-info">Tiempo Activo:</span>  <span>#active#</span></div>
+                                 <div><span class="label label-info">Reinicios:</span>  <span>#bootCount#</span></div>
+                                 <br>
+                                </div>
+                            </div>
+                            <!-- /block -->
+                        </div>
+                        <div class="span6">
+                            <!-- block -->
+                            <div class="block">
+                                <div class="navbar navbar-inner block-header">
+                                    <div class="muted pull-left"><i class="icon-screenshot"></i> CLIENTE</div>
+                                   
+                                </div>
+                                <div class="block-content collapse in">
+                                    <div><span class="label label-info">IP Cliente:</span>  <span>#clientIP#</span></div> 
+                                    <div><span class="label label-info">Navegador:</span>  <span>#userAgent#</span></div>
+                                    <br>
+                                    <br> 
+                                    <br> 
+                                </div>
+                            </div>
+                            <!-- /block -->
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <!-- block -->
+                            <div class="block">
+                                <div class="navbar navbar-inner block-header">
+                                    <div class="muted pull-left"><i class="icon-random"></i> SOFTWARE</div>
+                                </div>
+                                
+                                <div class="block-content collapse in">
+                                 <div><span class="label label-info">Software:</span>  <span>#software#</span></div>
+                                 <div><span class="label label-info">Versión:</span>  <span>#SW#</span></div>
+                                 <div><span class="label label-info">Fecha:</span>  <span>#SWdate#</span></div>
+                                 <div><span class="label label-info">SDK:</span>  <span>#sdk#</span></div>
+                                 <br>
+                                </div>
+                            </div>
+                            <!-- /block -->
+                        </div>
+                        <div class="span6">
+                            <!-- block -->
+                            <div class="block">
+                                <div class="navbar navbar-inner block-header">
+                                    <div class="muted pull-left"><i class="icon-inbox"></i> HARDWARE</div>
+                                   
+                                </div>
+                                <div class="block-content collapse in">
+                                    <div><span class="label label-info">Fabricante:</span>  <span>CubaElectronica</span></div> 
+                                    <div><span class="label label-info">Versión:</span>  <span>#HW#</span></div>
+                                    <br>
+                                    <br> 
+                                    <br> 
+                                </div>
+                            </div>
+                            <!-- /block -->
+                        </div>
+                    </div>
+                    
+                   
+                </div>
+            </div>
+            <hr>
+            <footer>
+                <p>&copy; CubaElectronica 2020</p>
+            </footer>
+        </div>
+        <!--/.fluid-container-->
+        <script src="jquery-1.9.1.min.js"></script>
+        <script src="bootstrap.min.js"></script>
+        <script src="jquery.easy-pie-chart.js"></script>
+        <script src="scripts.js"></script>
+        <script>
+        $(function() {
+            // Easy pie charts
+            $('.chart').easyPieChart({animate: 1000});
+        });
+        </script>
+    </body>
+
+</html>

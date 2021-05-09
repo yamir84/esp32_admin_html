@@ -1,0 +1,31 @@
+IDE de Desarrollo
+PlatformIO IDE
+
+BracketHighlighter
+Plugins que permite visualizar donde comienza y termina un bloque de código
+
+Comment-Snippets
+Atajos para crear bloques de comentario: comm-section ó comm-html-section
+
+JS-CSS-HTML Formatter
+Atajo para indentar código: 
+shortcuts: Alt+Shift+F
+
+Bootstrap 4, Font awesome 4, Font Awesome 5 Free & Pro snippets
+Autocompletador de bloques de código de Bootstrap 4 & Font Awesome
+
+jQuery Code Snippets
+Completa codigo jQuery
+
+AutoFileName
+Autocompleta la búsqueda de archivos
+
+Sublime Material Theme  o  Monokai Dark Soda
+Tema para Visual Studio Code
+
+
+
+
+
+
+
