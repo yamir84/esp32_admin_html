@@ -37,8 +37,11 @@ Tema para Visual Studio Code
 
 Construido con 🛠️
 Visual Studio Code - HTML & JavaScript
+
 https://code.visualstudio.com/
+
 https://www.w3schools.com/html/
+
 https://www.javascript.com/
 
 Wiki 📖
