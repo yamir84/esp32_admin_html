@@ -1,9 +1,9 @@
 ESP32 Admin Panel - HTML
+
 Proyecto de Panel administrativo embevido dentro del ESP32
 
 Comenzando 🚀
 Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas.
-
 git clone https://github.com/yamir84/esp32_admin_html.git
 
 Pre-requisitos 📋
@@ -21,8 +21,7 @@ Comment-Snippets
 Atajos para crear bloques de comentario: comm-section ó comm-html-section
 
 JS-CSS-HTML Formatter
-Atajo para indentar código: 
-shortcuts: Alt+Shift+F
+Atajo para indentar código: shortcuts: Alt+Shift+F
 
 Bootstrap 4, Font awesome 4, Font Awesome 5 Free & Pro snippets
 Autocompletador de bloques de código de Bootstrap 4 & Font Awesome
