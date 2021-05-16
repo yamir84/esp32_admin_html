@@ -51,14 +51,11 @@ Lista de Reproducción
 https://www.youtube.com/watch?v=1gniMO-Py8o&list=PL8HAlytDEGGg5-KzLQfAJqAZzosHVaxti
 
 Versiones 📌
-
+v1.0.3
+- Video 4 - Inicio Programación ESP32 - PlatformIO
 v1.0.2
-<<<<<<< HEAD
 - Video 3 - Maquetado Dashboard Final
 - Video 2 - Maquetado Dashboard
-=======
-- Video Maquetado Dashboard
->>>>>>> 4ca8d4a23bfa25cd63582fe9253ef6c99d5e9575
 
 v1.0.1
 - Video 1 - Introducción
