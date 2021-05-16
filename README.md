@@ -51,6 +51,7 @@ Lista de Reproducción
 https://www.youtube.com/watch?v=1gniMO-Py8o&list=PL8HAlytDEGGg5-KzLQfAJqAZzosHVaxti
 
 Versiones 📌
+
 v1.0.3
 - Video 4 - Inicio Programación ESP32 - PlatformIO
 
