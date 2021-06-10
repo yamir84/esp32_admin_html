@@ -38,6 +38,23 @@ unsigned long previousMillis = 0;
 const long interval = 300;
 // Utiliza ledState para configurar el LED                       
 bool ledState = LOW;   
+// Nuevas Variables declaradas
+// Variable para Temperatura de CPU
+float TempCPU; 
+
+/****************************************
+ * Sensor Temp Interno CPU
+ ****************************************/
+//Para ESP32 temperatura del CPU
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+    uint8_t temprature_sens_read();
+#ifdef __cplusplus
+}
+#endif
+uint8_t temprature_sens_read();
 
 
 /* Instancias */

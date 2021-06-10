@@ -35,7 +35,8 @@
 #include "ConfigRead.hpp"
 #include "ConfigSave.hpp"
 #include "ESP32_WIFI.hpp"
-
+// nuevo codico
+#include "Server.hpp"
 
 /************** Setup ******************/
 void setup() {
@@ -71,6 +72,8 @@ void setup() {
   delay(1000);
   WiFi.onEvent(WiFiStationDisconnected, SYSTEM_EVENT_STA_DISCONNECTED);
   configWiFi();
+  /* Server */
+  InitServer();
   /* Listo */
   log("\nInfo: Setup completado");
 
@@ -78,5 +81,5 @@ void setup() {
 
 /************** Bucle Infinito ******************/
 void loop() {
-
+  TempCPU = (temprature_sens_read() - 32) / 1.8;
 }

@@ -13,7 +13,7 @@
     <link href="bootstrap-responsive.min.css" rel="stylesheet" media="screen">
     <link href="jquery.easy-pie-chart.css" rel="stylesheet" media="screen">
     <link href="styles.css" rel="stylesheet" media="screen">
-    <script src="modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="modernizr.min.js"></script>
 </head>
 
 <body>
@@ -89,32 +89,28 @@
                         <div class="navbar navbar-inner block-header">
                             <div class="muted pull-left">Variables</div>
                             <div class="pull-right">
-                                <span class="badge badge-warning">ESP32</span>
+                                <span class="badge badge-warning">ESP32 - #id#</span>
                             </div>
                         </div>
                         <div class="block-content collapse in">
                             <div class="span3">
-                                <div class="chart" data-percent="73">73%</div>
+                                <div class="chart" id="chartWiFi" data-percent="#SWFI#"><span id="WiFiChart">#SWFI# %</span></div>
                                 <div class="chart-bottom-heading"><span class="label label-info">WIFI</span>
-
                                 </div>
                             </div>
                             <div class="span3">
-                                <div class="chart" data-percent="53">53%</div>
+                                <div class="chart" id="chartPMEM" data-percent="#PMEM#"><span id="PMEMChart">#PMEM# %</span></div>
                                 <div class="chart-bottom-heading"><span class="label label-info">FLASH Free</span>
-
                                 </div>
                             </div>
                             <div class="span3">
-                                <div class="chart" data-percent="83">83%</div>
+                                <div class="chart" id="chartram" data-percent="#ram#"><span id="ramChart">#ram# %</span></div>
                                 <div class="chart-bottom-heading"><span class="label label-info">RAM Free</span>
-
                                 </div>
                             </div>
                             <div class="span3">
-                                <div class="chart" data-percent="13">13 °C</div>
+                                <div class="chart" id="chartcpu" data-percent="#cpu#"><span id="cpuChart">#cpu# °C</span></div>
                                 <div class="chart-bottom-heading"><span class="label label-info">TEMP CPU</span>
-
                                 </div>
                             </div>
                         </div>
