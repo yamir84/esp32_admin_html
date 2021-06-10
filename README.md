@@ -52,9 +52,12 @@ https://www.youtube.com/watch?v=1gniMO-Py8o&list=PL8HAlytDEGGg5-KzLQfAJqAZzosHVa
 
 Versiones 📌
 
+<<<<<<< HEAD
 v1.0.4
 - Video 5 - Dashboard into ESP32 Static
 
+=======
+>>>>>>> 3550479181a3af73cdc885a95f8bc4a2a902074c
 v1.0.3
 - Video 4 - Inicio Programación ESP32 - PlatformIO
 
