@@ -36,7 +36,10 @@
 #include "ConfigSave.hpp"
 #include "ESP32_WIFI.hpp"
 // nuevo codico
+#include "ESP32_API.hpp"         
+#include "Websocket.hpp"
 #include "Server.hpp"
+#include "ESP32_WS.hpp"
 
 /************** Setup ******************/
 void setup() {
@@ -57,7 +60,7 @@ void setup() {
   configPines();
   /* Parpadeo LEDs */
   led();
-  lastReconnectAttempt = 0;
+  lastSendWS = 0;
   /* SPIFFS */                  
   if (!SPIFFS.begin()){
     log(F("\nError: Fallo la inicialización del SPIFFS ERROR"));
@@ -72,7 +75,9 @@ void setup() {
   delay(1000);
   WiFi.onEvent(WiFiStationDisconnected, SYSTEM_EVENT_STA_DISCONNECTED);
   configWiFi();
-  /* Server */
+  /* Iniciamos el WebSocket */
+  InitWebSockets();
+  /* Iniciamos el Server */
   InitServer();
   /* Listo */
   log("\nInfo: Setup completado");
@@ -81,5 +86,15 @@ void setup() {
 
 /************** Bucle Infinito ******************/
 void loop() {
+  /*** Usar si va a tardar mucho tiempo el Loop */
+  //yield();
+  /************* Portal Captivo en el ESP32 *****/
+  dnsServer.processNextRequest();
+  /************ Enviar JSON por WS cada segundo */
+  if (millis() - lastSendWS > 1000){
+      lastSendWS  = millis();
+      WsMessage(GetJson(), "");
+  }
+  /************ Leer la temp del CPU *************/
   TempCPU = (temprature_sens_read() - 32) / 1.8;
 }

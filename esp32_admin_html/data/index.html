@@ -163,11 +163,14 @@
     <script src="bootstrap.min.js"></script>
     <script src="jquery.easy-pie-chart.js"></script>
     <script src="scripts.js"></script>
+    <!--/Para Cambios en el PIE-->
     <script>
         $(function() {
             // Easy pie charts
             $('.chart').easyPieChart({
-                animate: 1000
+                easing: 'easeOutBounce',
+                //animate: 1000,
+                size: 150,
             });
         });
     </script>

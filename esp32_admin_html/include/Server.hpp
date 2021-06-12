@@ -51,7 +51,7 @@ void InitServer(){
     });
 
     /**********************************************/
-	server.begin();
+	  server.begin();
     log("\nInfo: HTTP server iniciado");
     /**********************************************/
     

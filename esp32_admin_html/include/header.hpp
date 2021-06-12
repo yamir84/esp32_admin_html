@@ -9,7 +9,7 @@
 
 /* Variables Globales */
 // Variable para no bloquear la reconexion del MQTT
-long lastReconnectAttempt = 0; 
+long lastSendWS = 0; 
 // Tamaño del Objeto JSON
 const size_t JSON_CONFIG = JSON_OBJECT_SIZE(5) + 500; 
 // ID del dispositivo           
