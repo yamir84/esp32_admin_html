@@ -53,6 +53,7 @@ https://www.youtube.com/watch?v=1gniMO-Py8o&list=PL8HAlytDEGGg5-KzLQfAJqAZzosHVa
 Versiones 📌
 
 v1.0.4
+- Video 6 - Dashboard into ESP32 Dinamic
 - Video 5 - Dashboard into ESP32 Static
 
 v1.0.3
