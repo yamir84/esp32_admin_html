@@ -55,7 +55,6 @@ Versiones 📌
 v1.0.5
 - Video 7 - Dashboard into ESP32 Data Wifi form
 
-
 v1.0.4
 - Video 6 - Dashboard into ESP32 Dynamic
 - Video 5 - Dashboard into ESP32 Static
