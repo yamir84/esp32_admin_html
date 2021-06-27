@@ -5,15 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ESP32 | Admin</title>
+    <title>ESP32 | WiFi</title>
     <!-- Favicon icon icono que sale en la web-->
     <link rel="icon" href="logo.png" type="image/x-icon">
     <!-- Bootstrap -->
     <link href="bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="bootstrap-responsive.min.css" rel="stylesheet" media="screen">
     <link href="jquery.easy-pie-chart.css" rel="stylesheet" media="screen">
-    <link href="styles.css" rel="stylesheet" media="screen">
     <link href="sweetalert2.min.css" rel="stylesheet" media="screen">
+    <link href="styles.css" rel="stylesheet" media="screen">
     <script src="modernizr.min.js"></script>
 </head>
 
@@ -49,10 +49,10 @@
             <!-- SideBar -->
             <div class="span3" id="sidebar">
                 <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
-                    <li class="active">
+                    <li class="">
                         <a href="/"><i class="icon-chevron-right"></i><i class="icon-home pull-left"></i> Dashboard</a>
                     </li>
-                    <li class="">
+                    <li class="active">
                         <a href="configwifi"><i class="icon-chevron-right"></i><i class="icon-signal pull-left"></i> Wifi</a>
                     </li>
                     <li class="">
@@ -78,7 +78,7 @@
                                     <a href="/">Dashboard</a> <span class="divider">/</span>
                                 </li>
                                 <li>
-                                    <span class="label label-info"> Panel</span>
+                                    <span class="label label-info"> WiFi</span>
                                 </li>
                             </ul>
                         </div>
@@ -88,73 +88,60 @@
                     <!-- block -->
                     <div class="block">
                         <div class="navbar navbar-inner block-header">
-                            <div class="muted pull-left">Variables</div>
+                            <div class="muted pull-left">Configure la conexión del:</div>
                             <div class="pull-right">
-                                <span class="badge badge-warning">ESP32 - #id#</span>
+                                <span class="badge badge-warning">WiFi</span>
                             </div>
                         </div>
                         <div class="block-content collapse in">
-                            <div class="span3">
-                                <div class="chart" id="chartWiFi" data-percent="#SWFI#"><span id="WiFiChart">#SWFI# %</span></div>
-                                <div class="chart-bottom-heading"><span class="label label-info">WIFI</span>
-                                </div>
-                            </div>
-                            <div class="span3">
-                                <div class="chart" id="chartPMEM" data-percent="#PMEM#"><span id="PMEMChart">#PMEM# %</span></div>
-                                <div class="chart-bottom-heading"><span class="label label-info">FLASH Free</span>
-                                </div>
-                            </div>
-                            <div class="span3">
-                                <div class="chart" id="chartram" data-percent="#ram#"><span id="ramChart">#ram# %</span></div>
-                                <div class="chart-bottom-heading"><span class="label label-info">RAM Free</span>
-                                </div>
-                            </div>
-                            <div class="span3">
-                                <div class="chart" id="chartcpu" data-percent="#cpu#"><span id="cpuChart">#cpu# °C</span></div>
-                                <div class="chart-bottom-heading"><span class="label label-info">TEMP CPU</span>
-                                </div>
+                            <div class="span12">
+                                <form class="form-horizontal" name="config" action="confwifiSave" method="post" id="formulario">
+                                    <fieldset>
+                                        <legend>Llenar todos los campos necesarios</legend>
+                                        <!-- /ID -->
+                                        <div class="control-group">
+                                            <label class="control-label" for="id">Device ID:</label>
+                                            <div class="controls">
+                                                <input class="input-xlarge focused" id="id" name="id" type="text" value="#id#" placeholder="ID del Dispositivo" maxlength="30">
+                                            </div>
+                                        </div>
+                                        <!-- WiFi -->
+                                        <div class="control-group">
+                                            <label class="control-label" for="ssid">Nombre de la Red:</label>
+                                            <div class="controls">
+                                                <input class="input-xlarge focused" id="ssid" name="ssid" type="text" value="#ssid#" placeholder="Nombre de la Red" maxlength="30">
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label" for="pw">Contraseña de la Red:</label>
+                                            <div class="controls">
+                                                <input class="input-xlarge focused" id="pw" name="pw" type="password" value="" placeholder="Contraseña de la Red" maxlength="30">
+                                            </div>
+                                        </div>
+                                        <!-- Modo AP -->
+                                        <div class="control-group">
+                                            <label class="control-label" for="nameap">Nombre modo AP:</label>
+                                            <div class="controls">
+                                                <input class="input-xlarge focused" id="nameap" name="nameap" type="text" value="#nameap#" placeholder="Nombre modo AP" maxlength="31">
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label" for="passwordap">Contraseña modo AP:</label>
+                                            <div class="controls">
+                                                <input class="input-xlarge focused" id="passwordap" name="passwordap" type="password" value="" placeholder="Contraseña modo AP" maxlength="63">
+                                            </div>
+                                        </div>
+                                        <!-- /Button -->
+                                        <div class="form-actions">
+                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                        </div>
+                                    </fieldset>
+                                </form>
+
                             </div>
                         </div>
                     </div>
                     <!-- /block -->
-                </div>
-                <div class="row-fluid">
-                    <!-- BLOQUE WIFI -->
-                    <div class="span6">
-                        <!-- block -->
-                        <div class="block">
-                            <div class="navbar navbar-inner block-header">
-                                <div class="muted pull-left"><i class="icon-signal"></i> RED WIFI</div>
-                            </div>
-                            <div class="block-content collapse in">
-                                <div><span class="label label-info">Estado:</span> <span id="WFEstatus">#WFEstatus#</span></div>
-                                <div><span class="label label-info">Red:</span> <span>#WFSSID#</span></div>
-                                <div><span class="label label-info">IP:</span> <span>#sysIP#</span></div>
-                                <div><span class="label label-info">RSSI:</span> <span id="WFDBM">#WFDBM# dBm</span></div>
-                                <div><span class="label label-info">Señal:</span> <span id="WFPRC">#WFPRC# %</span></div>
-                            </div>
-                        </div>
-                        <!-- /block -->
-                    </div>
-                    <!-- /BLOQUE WIFI -->
-                    <!-- BLOQUE MQTT -->
-                    <div class="span6">
-                        <!-- block -->
-                        <div class="block">
-                            <div class="navbar navbar-inner block-header">
-                                <div class="muted pull-left"><i class="icon-th-large"></i> MQTT BROKER</div>
-                            </div>
-                            <div class="block-content collapse in">
-                                <div><span class="label label-info">Estado:</span> <span id="MQTTStatus">#MQTTStatus#</span></div>
-                                <div><span class="label label-info">Servidor:</span> <span id="MQTTBroker">#MQTTBroker#</span></div>
-                                <div><span class="label label-info">Usuario:</span> <span>#MQTTUser#</span></div>
-                                <div><span class="label label-info">Client ID:</span> <span>#MQTTID#</span></div>
-                                <br>
-                            </div>
-                        </div>
-                        <!-- /block -->
-                    </div>
-                    <!-- /BLOQUE MQTT -->
                 </div>
             </div>
         </div>

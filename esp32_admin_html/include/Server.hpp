@@ -12,6 +12,8 @@ void InitServer(){
     server.serveStatic("/jquery-1.9.1.min.js", SPIFFS, "/jquery-1.9.1.min.js").setDefaultFile("jquery-1.9.1.min.js");
     server.serveStatic("/jquery.easy-pie-chart.js", SPIFFS, "/jquery.easy-pie-chart.js").setDefaultFile("jquery.easy-pie-chart.js");
     server.serveStatic("/modernizr.min.js", SPIFFS, "/modernizr.min.js").setDefaultFile("modernizr.min.js");
+    server.serveStatic("/sweetalert2.min.css", SPIFFS, "/sweetalert2.min.css").setDefaultFile("sweetalert2.min.css");
+    server.serveStatic("/sweetalert2.min.js", SPIFFS, "/sweetalert2.min.js").setDefaultFile("sweetalert2.min.js");
     server.serveStatic("/scripts.js", SPIFFS, "/scripts.js").setDefaultFile("scripts.js");
     server.serveStatic("/glyphicons-halflings.png", SPIFFS, "/glyphicons-halflings.png").setDefaultFile("glyphicons-halflings.png");
     server.serveStatic("/glyphicons-halflings-white.png", SPIFFS, "/glyphicons-halflings-white.png").setDefaultFile("glyphicons-halflings-white.png");
@@ -45,15 +47,170 @@ void InitServer(){
         // Envia dados al navegador
         request->send(200, "text/html", s);  
       }else{
-        request->send(500, "text/html", "<sript>alert('fallo la lectura del index.html');</script>");
-        log(F("\nError: Home - ERROR leyendo archivo"));
+        request->send(500, "text/html", "<html><meta charset='UTF-8'><head><link href='bootstrap.min.css' rel='stylesheet' media='screen'><link rel='stylesheet' href='sweetalert2.min.css'>"
+                                                                                 "<script src='jquery-1.9.1.min.js'><script src='bootstrap.min.js'></script></script><script src='sweetalert2.min.js'></script></head><body><script>"
+                                                    "Swal.fire({title: 'Error!',"
+                                                               " text: 'Error 500 Internal Server Error',"
+                                                               " icon: 'error',"
+                                                               " confirmButtonText: 'Cerrar'}).then((result) => {"
+                                                                                                  "if (result.isConfirmed){"
+                                                                                                       "window.location = '/';"
+                                                                                                   "};"
+                                                                                               "})"
+                                                 "</script><body></html>");
+        log(F("\nError: Config - ERROR leyendo el archivo"));
       }
     });
-
+    /**********************************************/
+    server.on("/configwifi", HTTP_GET, [](AsyncWebServerRequest *request){
+        // Config
+        File file = SPIFFS.open(F("/configwifi.html"), "r");
+        if (file){
+          file.setTimeout(100);
+          String s = file.readString();
+          file.close();
+          // Atualiza el contenido al cargar
+          s.replace(F("#id#"), id);
+          s.replace(F("#ssid#"), ssid);
+          //sección ap
+          s.replace(F("#nameap#"), String(nameap));
+          // Send data
+          request->send(200, "text/html", s);
+        }else{
+          request->send(500, "text/html", "<html><meta charset='UTF-8'><head><link href='bootstrap.min.css' rel='stylesheet' media='screen'><link rel='stylesheet' href='sweetalert2.min.css'>"
+                                                                                  "<script src='jquery-1.9.1.min.js'><script src='bootstrap.min.js'></script></script><script src='sweetalert2.min.js'></script></head><body><script>"
+                                                      "Swal.fire({title: 'Error!',"
+                                                                " text: 'Error 500 Internal Server Error',"
+                                                                " icon: 'error',"
+                                                                " confirmButtonText: 'Cerrar'}).then((result) => {"
+                                                                                                    "if (result.isConfirmed){"
+                                                                                                        "window.location = '/';"
+                                                                                                    "};"
+                                                                                                "})"
+                                                  "</script><body></html>");
+          log(F("\nError: Config - ERROR leyendo el archivo"));
+        }
+    });
+    /**********************************************/
+    server.on("/confwifiSave", HTTP_POST, [](AsyncWebServerRequest *request){
+        String response;
+        StaticJsonDocument<300> doc;
+        // Graba Configuración desde Config
+        // Verifica número de campos recebidos
+        // ESP32 envia 5 campos
+        if (request->params() == 5){
+          String s;
+          // ID
+          if(request->hasArg("id"))
+          s = request->arg("id");
+          s.trim();
+          if (s == ""){
+            s = deviceID();
+          }
+          strlcpy(id, s.c_str(), sizeof(id));
+          // SSID
+          if(request->hasArg("ssid"))
+          s = request->arg("ssid");
+          s.trim();
+          if (s == ""){
+            s = ssid;
+          }
+          strlcpy(ssid, s.c_str(), sizeof(ssid));
+          // PW SSID
+          if(request->hasArg("pw"))
+          s = request->arg("pw");
+          s.trim();
+          if (s != ""){
+            // Actualiza contraseña
+            strlcpy(pw, s.c_str(), sizeof(pw));
+          }
+          // Nombre AP
+          if(request->hasArg("nameap"))
+          s = request->arg("nameap");
+          s.trim();
+          if (s != ""){
+            // Atualiza ssid ap
+            strlcpy(nameap, s.c_str(), sizeof(nameap));
+          }
+          // Contraseña AP
+          if(request->hasArg("passwordap"))
+          s = request->arg("passwordap");
+          s.trim();
+          if (s != ""){
+            // Atualiza contraseña ap
+            strlcpy(passwordap, s.c_str(), sizeof(passwordap));
+          }
+          //Parpadeo de los lEDS     
+          led();
+          // Graba configuracion
+          if (configSave()){
+            request->send(200, "text/html", "<html><meta charset='UTF-8'><head><link href='bootstrap.min.css' rel='stylesheet' media='screen'><link rel='stylesheet' href='sweetalert2.min.css'>"
+                                            "<script src='jquery-1.9.1.min.js'><script src='bootstrap.min.js'></script></script><script src='sweetalert2.min.js'></script></head><body><script>"
+                                                      "Swal.fire({title: 'Hecho!',"
+                                                                " text: 'Configuración WIFI guardada, se requiere reiniciar el Equipo',"
+                                                                " icon: 'success',"
+                                                                " showCancelButton: true,"
+                                                                " confirmButtonColor: '#3085d6',"
+                                                                " cancelButtonColor: '#d33',"
+                                                                " confirmButtonText: 'Si, reiniciar',"
+                                                                " cancelButtonText: 'Cancelar',"
+                                                                " reverseButtons: true"
+                                                                " }).then((result) => {"
+                                                                              "if (result.isConfirmed){"
+                                                                                  "window.location = 'reboot';"
+                                                                              "}else if ("
+                                                                                  "result.dismiss === Swal.DismissReason.cancel"
+                                                                                "){"
+                                                                                  "history.back();"
+                                                                                "}"
+                                                                          "})"
+                                                  "</script><body></html>");
+          }else{
+            request->send(200, "text/html", "<html><meta charset='UTF-8'><head><link href='bootstrap.min.css' rel='stylesheet' media='screen'><link rel='stylesheet' href='sweetalert2.min.css'>"
+                                                                                  "<script src='jquery-1.9.1.min.js'><script src='bootstrap.min.js'></script></script><script src='sweetalert2.min.js'></script></head><body><script>"
+                                                      "Swal.fire({title: 'Error!',"
+                                                                " text: 'No se pudo guardar, Falló la configuración WIFI',"
+                                                                " icon: 'error',"
+                                                                " confirmButtonText: 'Cerrar'}).then((result) => {"
+                                                                                                    "if (result.isConfirmed){"
+                                                                                                        "history.back();"
+                                                                                                    "};"
+                                                                                                "})"
+                                                  "</script><body></html>");
+            log(F("\nError: ConfigSave - ERROR salvando Configuración"));
+          }
+        }else{
+            request->send(200, "text/html", "<html><meta charset='UTF-8'><head><link href='bootstrap.min.css' rel='stylesheet' media='screen'><link rel='stylesheet' href='sweetalert2.min.css'>"
+                                                                                  "<script src='jquery-1.9.1.min.js'><script src='bootstrap.min.js'></script></script><script src='sweetalert2.min.js'></script></head><body><script>"
+                                                      "Swal.fire({title: 'Error!',"
+                                                                " text: 'No se pudo guardar, Error de parámetros WIFI',"
+                                                                " icon: 'error',"
+                                                                " confirmButtonText: 'Cerrar'}).then((result) => {"
+                                                                                                    "if (result.isConfirmed){"
+                                                                                                        "history.back();"
+                                                                                                    "};"
+                                                                                                "})"
+                                                  "</script><body></html>");
+        }
+    });
+    /**********************************************/
+    server.onNotFound([](AsyncWebServerRequest *request) {
+      request->send(404, "text/html", "<html><meta charset='UTF-8'><head><link href='bootstrap.min.css' rel='stylesheet' media='screen'><link rel='stylesheet' href='sweetalert2.min.css'>"
+                                                                                  "<script src='jquery-1.9.1.min.js'><script src='bootstrap.min.js'></script></script><script src='sweetalert2.min.js'></script></head><body><script>"
+                                                      "Swal.fire({title: 'Error 404!',"
+                                                                " text: 'Página no encontrada',"
+                                                                " icon: 'warning',"
+                                                                " confirmButtonText: 'Cerrar'}).then((result) => {"
+                                                                                                    "if (result.isConfirmed){"
+                                                                                                        "history.back();"
+                                                                                                    "};"
+                                                                                                "})"
+                                                  "</script><body></html>");
+    });
     /**********************************************/
 	  server.begin();
     log("\nInfo: HTTP server iniciado");
     /**********************************************/
     
 
- }
+}
