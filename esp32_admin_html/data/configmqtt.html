@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ESP32 | WiFi</title>
+    <title>ESP32 | MQTT</title>
     <!-- Favicon icon icono que sale en la web-->
     <link rel="icon" href="logo.png" type="image/x-icon">
     <!-- Bootstrap -->
@@ -52,10 +52,10 @@
                     <li class="">
                         <a href="/"><i class="icon-chevron-right"></i><i class="icon-home pull-left"></i> Dashboard</a>
                     </li>
-                    <li class="active">
+                    <li class="">
                         <a href="configwifi"><i class="icon-chevron-right"></i><i class="icon-signal pull-left"></i> Wifi</a>
                     </li>
-                    <li class="">
+                    <li class="active">
                         <a href="configmqtt"><i class="icon-chevron-right"></i><i class="icon-th pull-left"></i> MQTT</a>
                     </li>
                     <li class="">
@@ -78,7 +78,7 @@
                                     <a href="/">Dashboard</a> <span class="divider">/</span>
                                 </li>
                                 <li>
-                                    <span class="label label-info"> WiFi</span>
+                                    <span class="label label-info"> MQTT</span>
                                 </li>
                             </ul>
                         </div>
@@ -90,45 +90,37 @@
                         <div class="navbar navbar-inner block-header">
                             <div class="muted pull-left">Configure la conexión del:</div>
                             <div class="pull-right">
-                                <span class="badge badge-warning">WiFi</span>
+                                <span class="badge badge-warning">MQTT</span>
                             </div>
                         </div>
                         <div class="block-content collapse in">
                             <div class="span12">
-                                <form class="form-horizontal" name="config" action="confwifiSave" method="post" id="formulario">
+                                <form class="form-horizontal" name="configMQTT" action="confmqttSave" method="post" id="formulario">
                                     <fieldset>
                                         <legend>Llenar todos los campos necesarios</legend>
                                         <!-- /ID -->
                                         <div class="control-group">
-                                            <label class="control-label" for="id">Device ID:</label>
+                                            <label class="control-label" for="mqttuser">Usuario MQTT:</label>
                                             <div class="controls">
-                                                <input class="input-xlarge focused" id="id" name="id" type="text" value="#id#" placeholder="ID del Dispositivo" maxlength="30">
-                                            </div>
-                                        </div>
-                                        <!-- WiFi -->
-                                        <div class="control-group">
-                                            <label class="control-label" for="ssid">Nombre de la Red:</label>
-                                            <div class="controls">
-                                                <input class="input-xlarge focused" id="ssid" name="ssid" type="text" value="#ssid#" placeholder="Nombre de la Red" maxlength="30">
+                                                <input class="input-xlarge focused" id="mqttuser" name="mqttuser" type="text" value="#mqttuser#" placeholder="Usuario MQTT" maxlength="30">
                                             </div>
                                         </div>
                                         <div class="control-group">
-                                            <label class="control-label" for="pw">Contraseña de la Red:</label>
+                                            <label class="control-label" for="idMqtt">ID del MQTT:</label>
                                             <div class="controls">
-                                                <input class="input-xlarge focused" id="pw" name="pw" type="password" value="" placeholder="Contraseña de la Red" maxlength="30">
-                                            </div>
-                                        </div>
-                                        <!-- Modo AP -->
-                                        <div class="control-group">
-                                            <label class="control-label" for="nameap">Nombre modo AP:</label>
-                                            <div class="controls">
-                                                <input class="input-xlarge focused" id="nameap" name="nameap" type="text" value="#nameap#" placeholder="Nombre modo AP" maxlength="31">
+                                                <input class="input-xlarge focused" id="idMqtt" name="idMqtt" type="text" value="#idMqtt#" placeholder="ID del MQTT" maxlength="30">
                                             </div>
                                         </div>
                                         <div class="control-group">
-                                            <label class="control-label" for="passwordap">Contraseña modo AP:</label>
+                                            <label class="control-label" for="mqttpass">Contraseña del MQTT:</label>
                                             <div class="controls">
-                                                <input class="input-xlarge focused" id="passwordap" name="passwordap" type="password" value="" placeholder="Contraseña modo AP" maxlength="63">
+                                                <input class="input-xlarge focused" id="mqttpass" name="mqttpass" type="password" value="" placeholder="Contraseña del MQTT" maxlength="30">
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label" for="mqttserver">Servidor MQTT:</label>
+                                            <div class="controls">
+                                                <input class="input-xlarge focused" id="mqttserver" name="mqttserver" type="text" value="#mqttserver#" placeholder="Servidor MQTT" maxlength="30">
                                             </div>
                                         </div>
                                         <!-- /Button -->

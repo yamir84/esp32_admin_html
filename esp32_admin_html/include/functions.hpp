@@ -36,6 +36,8 @@ String idUnique(){
     return idunique;
 }
 /**********************************************/
+// ID del Dispositivo para La Base de Datos
+const String device_id = hexStr(ESP.getEfuseMac()) + "CE" + String(idUnique()); 
 /*  ESP32 utiliza funcion getEfuseMac() */
 String deviceID(){
     return "ESP32" + hexStr(ESP.getEfuseMac()) + String(idUnique());

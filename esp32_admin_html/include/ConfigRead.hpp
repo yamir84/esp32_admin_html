@@ -21,3 +21,32 @@ boolean configRead(){
         return true;
     }
 }
+/**********************************************/
+boolean configReadMQTT(){
+    // Lee la configuración MQTT
+    StaticJsonDocument<JSONMQTT_SIZE> jsonConfig;
+
+    File file = SPIFFS.open(F("/ConfigMQTT.json"), "r");
+    if (deserializeJson(jsonConfig, file))
+    {
+        // Si falla la lectura asume valores padrones
+        configResetMQTT();
+        log(F("\nError: Falló la lectura del MQTT, asumiendo valores por defecto"));
+        return false;
+    }
+    else
+    {
+        // Si lee el archivo
+        strlcpy(mqttuser, jsonConfig["mqttuser"] | "", sizeof(mqttuser));
+        strlcpy(mqttpass, jsonConfig["mqttpass"] | "", sizeof(mqttpass));
+        strlcpy(mqttserver, jsonConfig["mqttserver"] | "", sizeof(mqttserver));
+        strlcpy(idMqtt, jsonConfig["idMqtt"] | "", sizeof(idMqtt));
+        timeMQTT = jsonConfig["timeMQTT"] | 60000;
+        MQTT = jsonConfig["MQTT"] | true;
+        file.close();
+        log(F("\nInfo: Lectura de configuración MQTT correcta"));
+        return true;
+    }
+}
+/**********************************************/
+

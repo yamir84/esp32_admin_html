@@ -11,7 +11,9 @@
 // Variable para no bloquear la reconexion del MQTT
 long lastSendWS = 0; 
 // Tamaño del Objeto JSON
-const size_t JSON_CONFIG = JSON_OBJECT_SIZE(5) + 500; 
+const size_t JSON_CONFIG = JSON_OBJECT_SIZE(5) + 500;
+//New mqtt
+const size_t JSONMQTT_SIZE = JSON_OBJECT_SIZE(6) + 500; 
 // ID del dispositivo           
 char id[30];
 // Red WiFi
@@ -41,6 +43,18 @@ bool ledState = LOW;
 // Nuevas Variables declaradas
 // Variable para Temperatura de CPU
 float TempCPU; 
+//nuevas variables
+//Tiempo para envio por MQTT new
+int timeMQTT;
+//MQTT
+long lastMsg = 0;
+//Variable para que la reconexion del MQTT no bloqueante
+long lastReconnectAttempt = 0; 
+// Tamaño del mensaje 
+char payload[255];
+// Tamaño del topico                          
+char topico[150];   
+
 
 /****************************************
  * Sensor Temp Interno CPU

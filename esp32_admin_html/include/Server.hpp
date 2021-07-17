@@ -92,6 +92,35 @@ void InitServer(){
         }
     });
     /**********************************************/
+    server.on("/configmqtt", HTTP_GET, [](AsyncWebServerRequest *request){
+        // Config
+        File file = SPIFFS.open(F("/configmqtt.html"), "r");
+        if (file){
+          file.setTimeout(100);
+          String s = file.readString();
+          file.close();
+          // Atualiza el contenido al cargar
+          s.replace(F("#idMqtt#"), idMqtt);
+          s.replace(F("#mqttuser#"), mqttuser);
+          s.replace(F("#mqttserver#"), mqttserver);
+          // Send data
+          request->send(200, "text/html", s);
+        }else{
+          request->send(500, "text/html", "<html><meta charset='UTF-8'><head><link href='bootstrap.min.css' rel='stylesheet' media='screen'><link rel='stylesheet' href='sweetalert2.min.css'>"
+                                                                                  "<script src='jquery-1.9.1.min.js'><script src='bootstrap.min.js'></script></script><script src='sweetalert2.min.js'></script></head><body><script>"
+                                                      "Swal.fire({title: 'Error!',"
+                                                                " text: 'Error 500 Internal Server Error',"
+                                                                " icon: 'error',"
+                                                                " confirmButtonText: 'Cerrar'}).then((result) => {"
+                                                                                                    "if (result.isConfirmed){"
+                                                                                                        "window.location = '/';"
+                                                                                                    "};"
+                                                                                                "})"
+                                                  "</script><body></html>");
+          log(F("\nError: Config - ERROR leyendo el archivo"));
+        }
+    });
+    /**********************************************/
     server.on("/confwifiSave", HTTP_POST, [](AsyncWebServerRequest *request){
         String response;
         StaticJsonDocument<300> doc;
@@ -192,6 +221,100 @@ void InitServer(){
                                                                                                 "})"
                                                   "</script><body></html>");
         }
+    });
+    /**********************************************/
+    server.on("/confmqttSave", HTTP_POST, [](AsyncWebServerRequest *request){
+      String response;
+      StaticJsonDocument<300> doc;
+      // Graba Configuración desde Config
+      // Verifica número de campos recebidos
+      // ESP32 envia 4 campos
+      if (request->params() == 4){
+        String s;
+        // Graba mqttuser
+        if(request->hasArg("mqttuser"))
+        s = request->arg("mqttuser");
+        s.trim();
+        if (s != ""){
+          // Atualiza usuario mqtt
+          strlcpy(mqttuser, s.c_str(), sizeof(mqttuser));
+        }
+        // Graba mqttpass
+        if(request->hasArg("mqttpass"))
+        s = request->arg("mqttpass");
+        s.trim();
+        if (s != ""){
+          // Atualiza contraseña del user mqtt
+          strlcpy(mqttpass, s.c_str(), sizeof(mqttpass));
+        }
+        // Graba mqttserver
+        if(request->hasArg("mqttserver"))
+        s = request->arg("mqttserver");
+        s.trim();
+        if (s != ""){
+          // Atualiza server mqtt
+          strlcpy(mqttserver, s.c_str(), sizeof(mqttserver));
+        }
+        // Graba mqtt ID
+        if(request->hasArg("idMqtt"))
+        s = request->arg("idMqtt");
+        s.trim();
+        if (s != ""){
+          // Atualiza mqtt ID
+          strlcpy(idMqtt, s.c_str(), sizeof(idMqtt));
+        }
+        //Parpadeo de los LED     
+        led();
+        // Guarda la configuracion
+        if (configSaveMQTT()){
+          request->send(200, "text/html", "<html><meta charset='UTF-8'><head><link href='bootstrap.min.css' rel='stylesheet' media='screen'><link rel='stylesheet' href='sweetalert2.min.css'>"
+                                            "<script src='jquery-1.9.1.min.js'><script src='bootstrap.min.js'></script></script><script src='sweetalert2.min.js'></script></head><body><script>"
+                                                    "Swal.fire({title: 'Hecho!',"
+                                                                " text: 'Configuración MQTT guardada, se requiere reiniciar el Equipo',"
+                                                                " icon: 'success',"
+                                                                " showCancelButton: true,"
+                                                                " confirmButtonColor: '#3085d6',"
+                                                                " cancelButtonColor: '#d33',"
+                                                                " confirmButtonText: 'Si, reiniciar',"
+                                                                " cancelButtonText: 'Cancelar',"
+                                                                " reverseButtons: true"
+                                                                " }).then((result) => {"
+                                                                            "if (result.isConfirmed){"
+                                                                                  "window.location = 'reboot';"
+                                                                              "}else if ("
+                                                                                "result.dismiss === Swal.DismissReason.cancel"
+                                                                              "){"
+                                                                                  "history.back();"
+                                                                              "}"
+                                                                          "})"                                                                        
+                                                  "</script><body></html>");
+        }else{
+          request->send(200, "text/html", "<html><meta charset='UTF-8'><head><link href='bootstrap.min.css' rel='stylesheet' media='screen'><link rel='stylesheet' href='sweetalert2.min.css'>"
+                                                                                  "<script src='jquery-1.9.1.min.js'><script src='bootstrap.min.js'></script></script><script src='sweetalert2.min.js'></script></head><body><script>"
+                                                    "Swal.fire({title: 'Error!',"
+                                                                " text: 'No se pudo guardar, Falló la configuración MQTT',"
+                                                                " icon: 'error',"
+                                                                " confirmButtonText: 'Cerrar'}).then((result) => {"
+                                                                                                  "if (result.isConfirmed){"
+                                                                                                        "history.back();"
+                                                                                                    "};"
+                                                                                                "})"
+                                                  "</script><body></html>");
+          log(F("\nError: ConfigSave - ERROR salvando Configuración"));
+        }
+      }else{
+          request->send(200, "text/html", "<html><meta charset='UTF-8'><head><link href='bootstrap.min.css' rel='stylesheet' media='screen'><link rel='stylesheet' href='sweetalert2.min.css'>"
+                                                                                  "<script src='jquery-1.9.1.min.js'><script src='bootstrap.min.js'></script></script><script src='sweetalert2.min.js'></script></head><body><script>"
+                                                    "Swal.fire({title: 'Error!',"
+                                                                " text: 'No se pudo guardar, Error de parámetros MQTT',"
+                                                                " icon: 'error',"
+                                                                " confirmButtonText: 'Cerrar'}).then((result) => {"
+                                                                                                  "if (result.isConfirmed){"
+                                                                                                        "history.back();"
+                                                                                                    "};"
+                                                                                                "})"
+                                                  "</script><body></html>");
+      }
     });
     /**********************************************/
     server.onNotFound([](AsyncWebServerRequest *request) {

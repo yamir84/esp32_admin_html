@@ -48,14 +48,6 @@ void setup() {
   /* CPU FREQU */
   setCpuFrequencyMhz(240);
   log("\nInfo: Iniciando Setup");
-  /* MQTT */
-  if(MQTT){
-    client.setServer(mqttserver, 1883);
-    client.setCallback(callback);
-    log("\nInfo: Cliente MQTT Habilitado");
-  }else{
-    log("\nInfo: Cliente MQTT Deshabilitado");
-  }
   /* Configurar los Pines */
   configPines();
   /* Parpadeo LEDs */
@@ -75,6 +67,18 @@ void setup() {
   delay(1000);
   WiFi.onEvent(WiFiStationDisconnected, SYSTEM_EVENT_STA_DISCONNECTED);
   configWiFi();
+  // Lee la Configuración MQTT
+  configReadMQTT();
+  // Guarda la Configuración MQTT
+  configSaveMQTT();
+  /* MQTT */
+  if(MQTT){
+    client.setServer(mqttserver, 1883);
+    client.setCallback(callback);
+    log("\nInfo: Cliente MQTT Habilitado");
+  }else{
+    log("\nInfo: Cliente MQTT Deshabilitado");
+  }
   /* Iniciamos el WebSocket */
   InitWebSockets();
   /* Iniciamos el Server */
@@ -97,4 +101,57 @@ void loop() {
   }
   /************ Leer la temp del CPU *************/
   TempCPU = (temprature_sens_read() - 32) / 1.8;
+  /************ MQTT envio de Datos  *************/
+  if(MQTT){
+
+    if (!client.connected() && WiFi.status() == WL_CONNECTED){
+      //para parpadear un led cuando esta conectandose al wifi no bloqueante
+      unsigned long currentMillis = millis();
+      if (currentMillis - previousMillis >= interval){
+        // * Guarda la última vez que parpadeó el LED.
+        previousMillis = currentMillis;
+        // * Si el LED está apagado, enciéndalo y viceversa:
+        ledState = not(ledState);
+        // * configurar el LED con el ledState de la variable:
+        digitalWrite(MQTTLED, ledState);
+      }
+      long now = millis();
+      //intenta conectarse a cada un minuto.
+      if (now - lastReconnectAttempt > 1000){
+        lastReconnectAttempt = now;
+        // Attempt to reconnect
+        if (reconnect()){
+          lastReconnectAttempt = 0;
+        }
+      }
+    }else{
+      // Client connected
+      client.loop();
+      digitalWrite(MQTTLED, LOW);
+    }
+
+    //Publicar segun el Tiempo MQTT el mensaje
+    if (client.connected()){
+      if (millis() - lastMsg > timeMQTT){
+
+        lastMsg = millis();
+        // Usuario MQTT Para Armar el Topico
+        const String userMQTT = mqttuser;
+
+        String payload_to_send = MQTTJson();  
+        payload_to_send.toCharArray(payload, 300);
+        String topic_aux_to_send = userMQTT+"/"+device_id+"/valores";
+        topic_aux_to_send.toCharArray(topico, 150);   
+
+        if (client.publish(topico, payload)){
+          log("\nInfo: Mansaje enviado por MQTT");
+        }else{
+          log("\nError: Mansaje no enviado por MQTT");
+        } 
+
+      }
+    }
+
+  } 
+
 }

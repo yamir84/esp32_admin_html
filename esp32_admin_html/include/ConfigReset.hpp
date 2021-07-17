@@ -9,3 +9,13 @@ void configReset(){
     strlcpy(passwordap, "iotcubaelectronica", sizeof(passwordap));
 }
 /**********************************************/
+void configResetMQTT(){
+    // Define configuración por defecto del equipo conexión MQTT
+    strlcpy(mqttuser, "curso_iot", sizeof(mqttuser));
+    strlcpy(mqttpass, "cubaelectronica", sizeof(mqttpass));
+    strlcpy(mqttserver, "cubaelectronica.com", sizeof(mqttserver));
+    strlcpy(idMqtt, deviceID().c_str(), sizeof(idMqtt));
+    timeMQTT = 60000;
+    MQTT = true;
+}
+/**********************************************/
