@@ -28,6 +28,7 @@ void InitServer(){
         file.close();
         // Actualiza contenido dinamico del html
         s.replace(F("#id#"), id);
+        s.replace(F("#serie#"), device_id);
         /* Bloque WIFI */
         s.replace(F("#WFEstatus#"), WiFi.status() == WL_CONNECTED ? F("<span class='label label-success'>CONECTADO</span>") : F("<span class='label label-important'>DESCONECTADO</span>"));
         s.replace(F("#WFSSID#"), WiFi.status() == WL_CONNECTED ? F(ssid) : F("--"));
@@ -315,6 +316,51 @@ void InitServer(){
                                                                                                 "})"
                                                   "</script><body></html>");
       }
+    });
+    /**********************************************/
+    server.on("/reconfig", HTTP_GET, [](AsyncWebServerRequest *request){
+        // Reinicia Config
+        configReset();
+        // Reinicia Config MQTT
+        configResetMQTT();
+        led();
+        // Graba la configuracion
+        if (configSave() && configSaveMQTT()){
+          request->send(200, "text/html", "<html><meta charset='UTF-8'><head><link href='bootstrap.min.css' rel='stylesheet' media='screen'><link rel='stylesheet' href='sweetalert2.min.css'>"
+                                            "<script src='jquery-1.9.1.min.js'><script src='bootstrap.min.js'></script></script><script src='sweetalert2.min.js'></script></head><body><script>"
+                                                    "Swal.fire({title: 'Hecho!',"
+                                                                " text: 'Configuración restablecida, se requiere reiniciar el Equipo',"
+                                                                " icon: 'success',"
+                                                                " showCancelButton: true,"
+                                                                " confirmButtonColor: '#3085d6',"
+                                                                " cancelButtonColor: '#d33',"
+                                                                " confirmButtonText: 'Si, reiniciar',"
+                                                                " cancelButtonText: 'Cancelar',"
+                                                                " reverseButtons: true"
+                                                                " }).then((result) => {"
+                                                                            "if (result.isConfirmed){"
+                                                                                  "window.location = 'reboot';"
+                                                                              "}else if ("
+                                                                                "result.dismiss === Swal.DismissReason.cancel"
+                                                                              "){"
+                                                                                  "history.back();"
+                                                                              "}"
+                                                                          "})"
+                                                  "</script><body></html>");
+        }else{
+          request->send(200, "text/html", "<html><meta charset='UTF-8'><head><link href='bootstrap.min.css' rel='stylesheet' media='screen'><link rel='stylesheet' href='sweetalert2.min.css'>"
+                                                                                  "<script src='jquery-1.9.1.min.js'><script src='bootstrap.min.js'></script></script><script src='sweetalert2.min.js'></script></head><body><script>"
+                                                    "Swal.fire({title: 'Error!',"
+                                                                " text: 'Falló restablecer de la configuración',"
+                                                                " icon: 'error',"
+                                                                " confirmButtonText: 'Cerrar'}).then((result) => {"
+                                                                                                  "if (result.isConfirmed){"
+                                                                                                        "history.back();"
+                                                                                                    "};"
+                                                                                                "})"
+                                                  "</script><body></html>");
+          log(F("\nError: Reconfigurar - ERROR reinicio Configuración"));
+        }
     });
     /**********************************************/
     server.onNotFound([](AsyncWebServerRequest *request) {

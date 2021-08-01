@@ -89,3 +89,28 @@ function processData(data) {
     }
 
 }
+
+//Llamado restablecer
+function restablecer() {
+
+    Swal.fire({
+        title: 'Restablecer!',
+        text: ' ¿Está seguro de restablecer el equipo?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, restablecer',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location = "reconfig";
+        } else if (
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            history.back();
+        }
+    })
+
+}
