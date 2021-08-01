@@ -53,6 +53,7 @@ https://www.youtube.com/watch?v=1gniMO-Py8o&list=PL8HAlytDEGGg5-KzLQfAJqAZzosHVa
 Versiones 📌
 
 v1.0.5
+- Video 9 - Dashboard into ESP32 Restore settings
 - Video 8 - Dashboard into ESP32 Data MQTT form
 - Video 7 - Dashboard into ESP32 Data Wifi form
 
